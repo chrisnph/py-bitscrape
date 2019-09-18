@@ -1,2 +1,4 @@
 .vscode
 controllers/scraper/threads.json
+client/node_modules/
+/dist
