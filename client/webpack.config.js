@@ -10,7 +10,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
         loader: "babel-loader",
         query: { compact: false }
       },
@@ -25,7 +26,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       // template: "./index.html"
       template: path.resolve(__dirname, "./src/public", "index.html"),
-      filename: './index.html'
+      filename: "./index.html"
     })
   ]
 };
