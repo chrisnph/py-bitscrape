@@ -143,7 +143,7 @@ class Scraper():
             # skip row if row format is not a thread
             else:
                 threads_total -= 1
-                print('Skipped non thread row {} from threads ({:.1f}s)\n'.format(threads_parsed_count, threads_total, time.time() - threads_parse_time))
+                print('Skipped non thread row {} from threads\n'.format(threads_parsed_count, threads_total))
                 continue
 
         # filter to remove first empty list
@@ -162,7 +162,7 @@ class Scraper():
             if algo.lower() in thread_info.lower():
                 possible_algo.append(algo)
             else:
-                continue
+                pass
 
         # mark as unknown if possible algo found
         if len(possible_algo) < 1:
