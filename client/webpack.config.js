@@ -18,6 +18,10 @@ module.exports = {
       {
         test: /\.(css|scss)$/,
         use: ["style-loader", "css-loader"]
+      },
+      {
+        test: path.resolve(__dirname, "node_modules/webpack-dev-server/client"),
+        loader: "null-loader"
       }
     ]
   },
