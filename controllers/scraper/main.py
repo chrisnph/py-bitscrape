@@ -48,33 +48,19 @@ class Scraper():
     def init(self):
         stime = time.time()
 
-        thread_parsed = self.fetch_json()
         self.data = self.scrape_threads()
         self.dump_json()
 
         # overall scrape time
         print('\nTotal scrape time / page: {:.1f}s\n\n'.format(math.floor(time.time() - stime)))
 
-    # load json data to data variable
-    def fetch_json(self):
-        with open('client/src/components/DataTables/threads.json', 'r') as json_file:
-            try:
-                print('reading json file ...')
-                data = json.load(json_file)
-            except Exception as e:
-                print(e)
-                print('empty json, setting initial data ...')
-                data = [{}]
-            finally:
-                print('closing file ...\n\n')
-                json_file.close()
-                return data
-    
-    # write / update json file
+    # update json file
     def dump_json(self):
-        with open('client/src/components/DataTables/threads.json', 'w', errors='ignore') as json_file:
+        with open('client/src/components/DataTables/threads.json', 'r+') as json_file:
             try:
+                json_file.seek(0)
                 json.dump(self.data, json_file, sort_keys=False, indent=4, separators=(',', ': '))
+                json_file.truncate()
             except Exception as e:
                 # on dump / file write error
                 print(e)
