@@ -10,7 +10,6 @@ import json
 
 class Scraper():
 
-    data = [{}]
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
     }
@@ -48,7 +47,8 @@ class Scraper():
     def init(self):
         stime = time.time()
 
-        self.data = self.scrape_threads()
+        data = [{}]
+        self.data = self.scrape_threads(data)
         self.dump_json()
 
         # overall scrape time
@@ -76,7 +76,7 @@ class Scraper():
         return res
 
     # scrapes total threads & summary
-    def scrape_threads(self):
+    def scrape_threads(self, data):
         url = 'https://bitcointalk.org/index.php?board=159'
 
         # threads_strainer = SoupStrainer('td', class_='windowbg')
@@ -116,7 +116,7 @@ class Scraper():
                 thread_date = " ".join(thread.find('td', class_='lastpostcol').span.text.split())
 
                 # appendding into data list
-                self.data.append({
+                data.append({
                     'title': thread_title,
                     'source': thread_href,
                     'info': thread_info,
@@ -133,7 +133,7 @@ class Scraper():
                 continue
 
         # filter to remove first empty list
-        return list(filter(None, self.data))
+        return list(filter(None, data))
 
     # get first header post in thread (author)
     def getInfo(self, thread_href):
