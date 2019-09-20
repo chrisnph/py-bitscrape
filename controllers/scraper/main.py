@@ -57,7 +57,7 @@ class Scraper():
 
     # load json data to data variable
     def fetch_json(self):
-        with open('./controllers/scraper/threads.json', 'r') as json_file:
+        with open('client/src/components/DataTables/threads.json', 'r') as json_file:
             try:
                 print('reading json file ...')
                 data = json.load(json_file)
@@ -72,7 +72,7 @@ class Scraper():
     
     # write / update json file
     def dump_json(self):
-        with open('./controllers/scraper/threads.json', 'w', errors='ignore') as json_file:
+        with open('client/src/components/DataTables/threads.json', 'w', errors='ignore') as json_file:
             try:
                 json.dump(self.data, json_file, sort_keys=False, indent=4, separators=(',', ': '))
             except Exception as e:
