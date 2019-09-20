@@ -17,7 +17,8 @@
     "jest": "jest --watchAll",
     "test": "npm run jest",
     "create": "webpack",
-    "start": "webpack-dev-server --config webpack.config.js --open"
+    "start": "webpack-dev-server --config webpack.config.js --open",
+    "startd": "webpack-dev-server --config webpack.config.js --no-inline"
   },
   "author": "Chris Ng",
   "license": "ISC",
@@ -41,6 +42,7 @@
     "html-webpack-plugin": "^3.2.0",
     "jest": "^22.4.4",
     "jquery": "^3.4.1",
+    "null-loader": "^3.0.0",
     "popper.js": "^1.15.0",
     "style-loader": "^1.0.0",
     "webpack": "^4.40.2",
