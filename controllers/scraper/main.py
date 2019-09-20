@@ -110,7 +110,7 @@ class Scraper():
                 thread_title = thread.find('span', id=lambda x: x and x.startswith('msg_')).a.text
                 thread_href = thread.a['href']
                 thread_info = str(self.getInfo(thread_href)).replace('"', "'")
-                thread_author = str(thread.findAll('td',  attrs={ 'class': 'windowbg2', 'width': '14%'})[0].a).replace('"', "'")
+                thread_author = str(thread.findAll('td',  attrs={ 'class': 'windowbg2', 'width': '14%'})[0].text).replace('"', "'")
                 # thread_algo = str(', '.join(self.getAlgo(thread_info)))
                 thread_algo = self.getAlgo(thread_info)
                 thread_date = " ".join(thread.find('td', class_='lastpostcol').span.text.split())
