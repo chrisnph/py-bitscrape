@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import DataRows from "./DataRows";
 
-class DataTables extends Component {
-    render() { 
-        return (
-            <div className="container">
-                test
-            </div>
-        );
-    }
-}
- 
+const DataTables = props => {
+  return (
+    <div>
+      <DataRows />
+    </div>
+  );
+};
+
 export default DataTables;
