@@ -57,7 +57,7 @@ const Rows = styled.div`
       filter: drop-shadow(-1px 1px 2px #000);
     }
     & #info-close:hover {
-      filter: drop-shadow(-1px 1px 1px #000)
+      filter: drop-shadow(-1px 1px 1px #000);
     }
 
     & .userimg {
@@ -67,52 +67,53 @@ const Rows = styled.div`
 `;
 
 const DataRows = props => {
-  let dataFiltered = props.dataRow.filter(f => {
-    return [
-      f["Post Date"].split(" ")[0].toLowerCase() === "today",
-      f["Post Date"].split(" ")[0].toLowerCase() !== "today"
-    ];
-  });
+  let dataSorting = (a, b) => {
+    return a.props.children[3].props.children.toLowerCase().includes("today") ? -1 : 1;
+  };
 
-  const dataDisplay = dataFiltered.map((row, index) => {
-    return (
-      <div
-        key={index}
-        className={`row wrapper-datarow py-2 ${props.dataHidden.includes(
-          row.source
-        ) && "hidden"}`}
-      >
-        <div className="col-md-5">
-          <a
-            href="#"
-            onClick={(e) => props.toggleInfo({e, info: row.info, close: false})}
-            className="datarow datarow-title"
-          >
-            {row.title}
-          </a>
+  const dataDisplay = props.dataRow
+    .map((row, index) => {
+      return (
+        <div
+          key={index}
+          className={`row wrapper-datarow py-2 ${props.dataHidden.includes(
+            row.source
+          ) && "hidden"}`}
+        >
+          <div className="col-md-5">
+            <a
+              href="#"
+              onClick={e =>
+                props.toggleInfo({ e, info: row.info, close: false })
+              }
+              className="datarow datarow-title"
+            >
+              {row.title}
+            </a>
+          </div>
+          <div className="col-md-1">
+            <a
+              href={row.source}
+              target="_blank"
+              className="datarow datarow-source"
+            >
+              BitCoinTalk
+            </a>
+          </div>
+          <div className="col-md-2">{row.algo.join(" | ")}</div>
+          <div className="col-md-3">{row["Post Date"]}</div>
+          <div className="col-md-1">
+            <button
+              className="btn btn-warning btn-sm rounded-circle"
+              onClick={e => props.isVisible(e)}
+            >
+              <i className="fa fa-eye-slash" aria-hidden="true"></i>
+            </button>
+          </div>
         </div>
-        <div className="col-md-1">
-          <a
-            href={row.source}
-            target="_blank"
-            className="datarow datarow-source"
-          >
-            BitCoinTalk
-          </a>
-        </div>
-        <div className="col-md-2">{row.algo.join(" | ")}</div>
-        <div className="col-md-3">{row["Post Date"]}</div>
-        <div className="col-md-1">
-          <button
-            className="btn btn-warning btn-sm rounded-circle"
-            onClick={e => props.isVisible(e)}
-          >
-            <i className="fa fa-eye-slash" aria-hidden="true"></i>
-          </button>
-        </div>
-      </div>
-    );
-  });
+      );
+    })
+    .sort(dataSorting);
 
   return (
     <Rows className="container-fluid mb-5">
