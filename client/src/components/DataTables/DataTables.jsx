@@ -2,6 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from "react";
 import jsonData from "./threads.json";
 import DataRows from "./DataRows";
 import styled from "styled-components";
+import notify from "./Notify";
 
 const Table = styled.div`
   margin: 30px 0;
@@ -25,11 +26,14 @@ const DataTables = () => {
       : localStorage.hiddenThreads.split(",");
   });
 
+  let [rowsDiff, setRowsDiff] = useState([]);
+
   const handleSorting = newData => {
     return newData;
   };
 
   useEffect(() => {
+    console.log("ran ue");
     setInterval(() => {
       fetch("src/components/DataTables/threads.json")
         .then(res => {
@@ -38,9 +42,24 @@ const DataTables = () => {
         .then(newData => {
           newData = handleSorting(newData);
           rows !== newData && setRows(newData);
+
+          let dataDiff = rows.filter(r => {
+            return !newData.some(n => {
+              return n.source === r.source;
+            });
+          });
+          setRowsDiff(dataDiff);
         });
     }, 2000);
   }, []);
+
+  // alert notification on new data
+  useEffect(() => {
+    if (rowsDiff.length > 0) {
+      notify(rowsDiff);
+      rowsDiff = []; // doing a direct mutation here
+    }
+  }, [rowsDiff.length > 0]);
 
   const handleThread = (e, clearHidden) => {
     if (clearHidden) {
