@@ -18,7 +18,7 @@ const Table = styled.div`
   }
 `;
 
-const DataTables = () => {
+const DataTables = props => {
   const [rows, setRows] = useState(jsonData);
   const [rowsHidden, setRowsHidden] = useState(() => {
     return !localStorage.hiddenThreads
@@ -33,6 +33,7 @@ const DataTables = () => {
   };
 
   useEffect(() => {
+
     setInterval(() => {
       fetch("src/components/DataTables/threads.json")
         .then(res => {
@@ -56,7 +57,7 @@ const DataTables = () => {
   useEffect(() => {
     if (rowsDiff.length > 0) {
       notify(rowsDiff);
-      setRowsDiff(rowsDiff => rowsDiff)
+      setRowsDiff(rowsDiff => rowsDiff);
     }
   }, [rowsDiff.length > 0]);
 
