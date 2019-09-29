@@ -2,7 +2,6 @@ const notify = data => {
   const audNotice = new Audio(
     "src/components/DataTables/assets/audio/notice.wav"
   );
-  audNotice.load();
 
   Notification.requestPermission().then(res => {
     if (res === "granted") {
@@ -14,18 +13,15 @@ const notify = data => {
         if (promise !== undefined) {
           promise
             .then(_ => {
-              console.log("playing");
+              
             })
             .catch(e => {
-              audNotice.load();
-              audNotice.pause();
-              audNotice.currentTime = 0;
-              console.log(e);
+              throw new Error(e)
             });
         }
 
         new Notification(post.title, {
-          body: post.info,
+          body: post.info.replace(/<\/?[^>]+>/ig, " ").trim(),
           icon: "src/components/DataTables/assets/img/notice.png"
         });
       });
