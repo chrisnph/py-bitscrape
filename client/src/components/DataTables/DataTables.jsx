@@ -33,7 +33,6 @@ const DataTables = () => {
   };
 
   useEffect(() => {
-    console.log("ran ue");
     setInterval(() => {
       fetch("src/components/DataTables/threads.json")
         .then(res => {
@@ -57,7 +56,7 @@ const DataTables = () => {
   useEffect(() => {
     if (rowsDiff.length > 0) {
       notify(rowsDiff);
-      rowsDiff = []; // doing a direct mutation here
+      setRowsDiff(rowsDiff => rowsDiff)
     }
   }, [rowsDiff.length > 0]);
 
