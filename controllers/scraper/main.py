@@ -150,7 +150,7 @@ class Scraper():
             else:
                 pass
 
-        # mark as unknown if possible algo found
+        # mark as unknown if possible algo not found
         if len(possible_algo) < 1:
             possible_algo = ['unknown']
         
